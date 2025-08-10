@@ -2,7 +2,7 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'app.lovable.2a4c681989d149b181b2a49259ad0a50',
+  appId: 'com.musicarcamusi.com',
   appName: 'audio-arcadia-player',
   webDir: 'dist',
   server: {
