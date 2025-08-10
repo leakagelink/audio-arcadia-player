@@ -1,0 +1,19 @@
+
+import { CapacitorConfig } from '@capacitor/cli';
+
+const config: CapacitorConfig = {
+  appId: 'app.lovable.2a4c681989d149b181b2a49259ad0a50',
+  appName: 'audio-arcadia-player',
+  webDir: 'dist',
+  server: {
+    url: 'https://2a4c6819-89d1-49b1-81b2-a49259ad0a50.lovableproject.com?forceHideBadge=true',
+    cleartext: true
+  },
+  plugins: {
+    SplashScreen: {
+      launchShowDuration: 0
+    }
+  }
+};
+
+export default config;
