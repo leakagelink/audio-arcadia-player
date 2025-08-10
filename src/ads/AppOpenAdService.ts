@@ -13,7 +13,7 @@ class AppOpenAdService {
         isTesting: true // Set to false for production
       };
 
-      await AdMob.prepareAppOpen(options);
+      await AdMob.prepareInterstitial(options);
       this.isLoaded = true;
       console.log('App Open ad preloaded');
     } catch (error) {
@@ -36,7 +36,7 @@ class AppOpenAdService {
     }
 
     try {
-      await AdMob.showAppOpen();
+      await AdMob.showInterstitial();
       this.lastShown = now;
       this.isLoaded = false;
       console.log('App Open ad shown');

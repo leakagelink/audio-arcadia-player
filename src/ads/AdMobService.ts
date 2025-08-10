@@ -10,7 +10,6 @@ class AdMobService {
     
     try {
       await AdMob.initialize({
-        requestTrackingAuthorization: true,
         testingDevices: [],
         initializeForTesting: true // Set to false for production
       });
