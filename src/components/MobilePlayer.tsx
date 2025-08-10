@@ -1,16 +1,30 @@
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { usePlayer } from '@/contexts/PlayerContext';
+import { useAds } from '@/hooks/useAds';
 import TrackList from './TrackList';
 import SearchScreen from './SearchScreen';
 import MiniPlayer from './MiniPlayer';
 import NowPlayingSheet from './NowPlayingSheet';
 import BottomTabs from './BottomTabs';
+import AdBannerManager from './AdBannerManager';
 
 export default function MobilePlayer() {
   const [activeTab, setActiveTab] = useState('home');
   const [isNowPlayingOpen, setIsNowPlayingOpen] = useState(false);
   const { currentTrack, queue } = usePlayer();
+  const { showInterstitial, onTrackChange } = useAds();
+
+  // Expose ad functions globally for PlayerContext
+  useEffect(() => {
+    (window as any).adEvents = {
+      showInterstitial,
+      onTrackChange
+    };
+
+    return () => {
+      delete (window as any).adEvents;
+    };
+  }, [showInterstitial, onTrackChange]);
 
   const renderTabContent = () => {
     switch (activeTab) {
@@ -61,6 +75,11 @@ export default function MobilePlayer() {
       <NowPlayingSheet 
         isOpen={isNowPlayingOpen} 
         onOpenChange={setIsNowPlayingOpen} 
+      />
+
+      <AdBannerManager 
+        isNowPlayingOpen={isNowPlayingOpen}
+        hasCurrentTrack={!!currentTrack}
       />
     </div>
   );

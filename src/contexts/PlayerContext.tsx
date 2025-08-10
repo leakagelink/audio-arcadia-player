@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useRef, useEffect, ReactNode } from 'react';
 
 export interface Track {
@@ -138,6 +137,11 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
     if (track && track.id !== currentTrack?.id) {
       setCurrentTrack(track);
       setCurrentTime(0);
+      
+      // Trigger ad event for track change
+      if (typeof window !== 'undefined' && (window as any).adEvents) {
+        (window as any).adEvents.onTrackChange();
+      }
     }
     if (audioRef.current) {
       audioRef.current.play();
@@ -187,6 +191,13 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
       const nextTrack = queue[nextIndex];
       if (nextTrack) {
         play(nextTrack);
+        
+        // Show interstitial ad occasionally
+        if (typeof window !== 'undefined' && (window as any).adEvents) {
+          setTimeout(() => {
+            (window as any).adEvents.showInterstitial();
+          }, 500);
+        }
       }
     }
   };

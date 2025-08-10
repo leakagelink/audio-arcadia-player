@@ -45,6 +45,7 @@
     
     --player-height: 5rem;
     --sidebar-width: 16rem;
+    --admob-banner-height: 60px; /* Space for AdMob banner */
   }
 }
 
@@ -61,9 +62,13 @@
     min-height: 100dvh;
   }
 
-  /* Safe area support */
+  /* Safe area support with AdMob banner space */
   .pb-safe {
     padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+
+  .pb-safe-with-ads {
+    padding-bottom: max(calc(1rem + var(--admob-banner-height)), env(safe-area-inset-bottom));
   }
 
   .pt-safe {
@@ -169,6 +174,11 @@
   /* Enhanced mobile touch feedback */
   .touch-feedback {
     @apply transition-all duration-150 active:scale-95 active:opacity-80;
+  }
+
+  /* AdMob banner spacing */
+  .with-admob-banner {
+    margin-bottom: var(--admob-banner-height);
   }
 }
 

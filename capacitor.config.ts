@@ -12,7 +12,14 @@ const config: CapacitorConfig = {
   plugins: {
     SplashScreen: {
       launchShowDuration: 0
+    },
+    AdMob: {
+      appId: 'ca-app-pub-2211398170597117~5066377773',
+      testingDevices: ['YOUR_DEVICE_ID_HERE']
     }
+  },
+  android: {
+    appendUserAgent: 'AudioArcadiaPlayer/1.0'
   }
 };
 
