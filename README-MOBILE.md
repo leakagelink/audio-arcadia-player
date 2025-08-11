@@ -9,17 +9,17 @@
 
 ## After making changes to the project:
 
-1. **Build the web assets:**
+1. **Build the web application:**
    ```bash
    npm run build
    ```
 
-2. **Sync changes to native platforms:**
+2. **Sync the project:**
    ```bash
-   npx cap sync android
+   npx cap sync
    ```
 
-3. **Run the app:**
+3. **Run on Android:**
    ```bash
    npx cap run android
    ```
@@ -78,34 +78,22 @@ npx cap sync android
 npx cap run android
 ```
 
-## AdMob Configuration
+## AdMob Configuration Status
 
-- **Development:** Uses Google's sample App ID (`ca-app-pub-3940256099942544~3347511713`)
-- **Production:** Update `capacitor.config.ts` to use your real App ID (`ca-app-pub-2211398170597117~5066377773`)
+⚠️ **Current Status: AdMob Temporarily Disabled**
+
+AdMob services have been temporarily disabled to fix app crashes. The following files have been modified:
+- `src/hooks/useAds.ts` - All ad initialization commented out
+- `src/components/AdBannerManager.tsx` - Banner ad logic commented out
+
+### To Re-enable AdMob Later:
+1. Uncomment the code in `useAds.ts` and `AdBannerManager.tsx`
+2. Ensure proper App ID configuration in `capacitor.config.ts`
+3. Test with AdMob test ads first before using production IDs
 
 ## Troubleshooting
 
-### Java Version Issues
-If you get "invalid source release: 21" error:
-
-1. **Check Java version:**
-   ```bash
-   java -version
-   javac -version
-   ```
-
-2. **Install Java 21 or configure Gradle for Java 17:**
-   ```bash
-   # Option 1: Install Java 21 and set JAVA_HOME
-   $env:JAVA_HOME = "C:\Program Files\Java\jdk-21"
-   
-   # Option 2: Use Android Studio (handles Java automatically)
-   npx cap open android
-   ```
-
-### Build Failures
-If the app still crashes or fails to build:
-
+### App Crashes on Startup
 1. **Clean and rebuild:**
    ```bash
    cd android
@@ -128,13 +116,31 @@ If the app still crashes or fails to build:
    npx cap run android
    ```
 
-### Environment Setup Issues
+### Java Version Issues
+If you get "invalid source release: 21" error:
+
+1. **Check Java version:**
+   ```bash
+   java -version
+   javac -version
+   ```
+
+2. **Install Java 21 or configure Gradle for Java 17:**
+   ```bash
+   # Option 1: Install Java 21 and set JAVA_HOME
+   $env:JAVA_HOME = "C:\Program Files\Java\jdk-21"
+   
+   # Option 2: Use Android Studio (handles Java automatically)
+   npx cap open android
+   ```
+
+### Build Failures
 - Ensure Android SDK is properly installed
 - Verify ANDROID_HOME points to correct SDK location
 - Check that Java version matches project requirements
 - Use Android Studio for automatic configuration if manual setup fails
 
-## Quick Start Commands (After Java 21 Setup)
+## Quick Start Commands (After Java Setup)
 
 ```bash
 # Set environment variables (replace [Username] with your username)
@@ -146,7 +152,14 @@ $env:PATH = "$env:JAVA_HOME\bin;$env:ANDROID_HOME\tools;$env:ANDROID_HOME\platfo
 # Build and run
 npm install --legacy-peer-deps
 npm run build
-npx cap add android  # Only first time
 npx cap sync android
 npx cap run android
 ```
+
+## Next Steps After App Works
+
+Once the app builds and runs successfully without crashes:
+1. Test all basic functionality (play music, navigation, etc.)
+2. Re-enable AdMob step by step
+3. Test with AdMob test ads first
+4. Configure production Ad Unit IDs when ready for release

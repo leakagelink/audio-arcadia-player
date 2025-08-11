@@ -1,26 +1,28 @@
 
 import { useEffect } from 'react';
-import { interstitialAdService } from '@/ads/InterstitialAdService';
-import { appOpenAdService } from '@/ads/AppOpenAdService';
-import { adMobService } from '@/ads/AdMobService';
+// Temporarily commented out to fix app crashes
+// import { interstitialAdService } from '@/ads/InterstitialAdService';
+// import { appOpenAdService } from '@/ads/AppOpenAdService';
+// import { adMobService } from '@/ads/AdMobService';
 
 export function useAds() {
   useEffect(() => {
-    // Initialize ad services with delay
+    // Temporarily disabled ad initialization to fix crashes
+    console.log('Ad services temporarily disabled for debugging');
+    
+    // TODO: Re-enable after fixing AdMob configuration
+    /*
     const initAds = async () => {
       try {
         console.log('Starting ad services initialization...');
         
-        // Initialize AdMob first
         await adMobService.initialize();
         
-        // Then initialize ad services
         await Promise.all([
           interstitialAdService.initialize(),
           appOpenAdService.initialize()
         ]);
         
-        // Preload ads after initialization
         setTimeout(async () => {
           await Promise.all([
             interstitialAdService.preload(),
@@ -35,22 +37,22 @@ export function useAds() {
     };
 
     initAds();
-
-    // Remove automatic app state change handler for now to prevent crashes
-    // We'll add it back once the app is stable
-    
+    */
   }, []);
 
+  // Return empty functions to prevent crashes
   const showInterstitial = () => {
-    return interstitialAdService.show();
+    console.log('Interstitial ad disabled');
+    return Promise.resolve(false);
   };
 
   const showAppOpen = () => {
-    return appOpenAdService.show();
+    console.log('App open ad disabled');
+    return Promise.resolve(false);
   };
 
   const onTrackChange = () => {
-    interstitialAdService.onTrackChange();
+    console.log('Track change ad trigger disabled');
   };
 
   return {

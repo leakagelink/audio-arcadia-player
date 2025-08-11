@@ -1,6 +1,7 @@
 
 import { useEffect, useState } from 'react';
-import { adMobService } from '@/ads/AdMobService';
+// Temporarily commented out to fix app crashes
+// import { adMobService } from '@/ads/AdMobService';
 
 interface AdBannerManagerProps {
   isNowPlayingOpen: boolean;
@@ -11,7 +12,11 @@ export default function AdBannerManager({ isNowPlayingOpen, hasCurrentTrack }: A
   const [isBannerVisible, setIsBannerVisible] = useState(false);
 
   useEffect(() => {
-    // Show banner when app loads
+    // Temporarily disabled banner ads to fix crashes
+    console.log('Banner ads temporarily disabled for debugging');
+    
+    // TODO: Re-enable after fixing AdMob configuration
+    /*
     const initBanner = async () => {
       await adMobService.initialize();
       await adMobService.showBanner();
@@ -20,19 +25,24 @@ export default function AdBannerManager({ isNowPlayingOpen, hasCurrentTrack }: A
 
     initBanner();
 
-    // Cleanup on unmount
     return () => {
       adMobService.removeBanner();
     };
+    */
   }, []);
 
   useEffect(() => {
-    // Hide banner when Now Playing sheet is open
+    // Temporarily disabled banner hide/show logic
+    console.log('Banner visibility logic disabled');
+    
+    // TODO: Re-enable after fixing AdMob configuration
+    /*
     if (isNowPlayingOpen && isBannerVisible) {
       adMobService.hideBanner();
     } else if (!isNowPlayingOpen && isBannerVisible) {
       adMobService.showBanner();
     }
+    */
   }, [isNowPlayingOpen, isBannerVisible]);
 
   // This component doesn't render anything visible
