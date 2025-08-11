@@ -1,36 +1,52 @@
 
 import { useEffect } from 'react';
-import { App } from '@capacitor/app';
 import { interstitialAdService } from '@/ads/InterstitialAdService';
 import { appOpenAdService } from '@/ads/AppOpenAdService';
+import { adMobService } from '@/ads/AdMobService';
 
 export function useAds() {
   useEffect(() => {
-    // Initialize and preload ads
+    // Initialize ad services with delay
     const initAds = async () => {
-      await interstitialAdService.preload();
-      await appOpenAdService.preload();
+      try {
+        console.log('Starting ad services initialization...');
+        
+        // Initialize AdMob first
+        await adMobService.initialize();
+        
+        // Then initialize ad services
+        await Promise.all([
+          interstitialAdService.initialize(),
+          appOpenAdService.initialize()
+        ]);
+        
+        // Preload ads after initialization
+        setTimeout(async () => {
+          await Promise.all([
+            interstitialAdService.preload(),
+            appOpenAdService.preload()
+          ]);
+        }, 2000);
+        
+        console.log('Ad services initialization completed');
+      } catch (error) {
+        console.error('Failed to initialize ad services:', error);
+      }
     };
 
     initAds();
 
-    // Handle app state changes for App Open ads
-    const handleAppStateChange = (state: { isActive: boolean }) => {
-      if (state.isActive) {
-        console.log('App resumed, showing App Open ad');
-        appOpenAdService.show();
-      }
-    };
-
-    App.addListener('appStateChange', handleAppStateChange);
-
-    return () => {
-      App.removeAllListeners();
-    };
+    // Remove automatic app state change handler for now to prevent crashes
+    // We'll add it back once the app is stable
+    
   }, []);
 
   const showInterstitial = () => {
     return interstitialAdService.show();
+  };
+
+  const showAppOpen = () => {
+    return appOpenAdService.show();
   };
 
   const onTrackChange = () => {
@@ -39,6 +55,7 @@ export function useAds() {
 
   return {
     showInterstitial,
+    showAppOpen,
     onTrackChange
   };
 }
