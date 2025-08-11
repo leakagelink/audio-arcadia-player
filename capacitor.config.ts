@@ -11,7 +11,12 @@ const config: CapacitorConfig = {
       backgroundColor: '#1a1a1a'
     },
     AdMob: {
-      appId: 'ca-app-pub-2211398170597117~5066377773',
+      // Using Google's sample App ID for development to prevent crashes
+      appId: 'ca-app-pub-3940256099942544~3347511713',
+      
+      // Production App ID (uncomment when ready for production)
+      // appId: 'ca-app-pub-2211398170597117~5066377773',
+      
       testingDevices: []
     }
   },
