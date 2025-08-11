@@ -1,5 +1,5 @@
 
-import { AdMob, AppOpenAdOptions } from '@capacitor-community/admob';
+import { AdMob, AdOptions } from '@capacitor-community/admob';
 import { ADMOB_CONFIG, AD_SETTINGS } from './config';
 
 class AppOpenAdService {
@@ -34,12 +34,13 @@ class AppOpenAdService {
     this.isLoading = true;
 
     try {
-      const options: AppOpenAdOptions = {
+      const options: AdOptions = {
         adId: ADMOB_CONFIG.appOpenAdUnitId,
         isTesting: true
       };
 
-      await AdMob.prepareAppOpenAd(options);
+      // Use prepareInterstitial for App Open ads as they use similar API
+      await AdMob.prepareInterstitial(options);
       this.isLoaded = true;
       this.isLoading = false;
       console.log('App Open ad preloaded successfully');
@@ -78,7 +79,8 @@ class AppOpenAdService {
     }
 
     try {
-      await AdMob.showAppOpenAd();
+      // Use showInterstitial for App Open ads as they use similar API
+      await AdMob.showInterstitial();
       this.lastShown = now;
       this.isLoaded = false;
       console.log('App Open ad shown successfully');
